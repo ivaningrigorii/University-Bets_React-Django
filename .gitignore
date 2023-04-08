@@ -5,6 +5,7 @@ __pycache__
 .DS_Store 
 .idea
 venv
-/venv
 db.sqllite3
+my_work/db.sqlite3
 src_back/db.sqlite3
+migrations
