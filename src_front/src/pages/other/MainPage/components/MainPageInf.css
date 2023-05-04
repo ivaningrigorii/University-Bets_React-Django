@@ -1,0 +1,104 @@
+body{
+   background-color: #fff; 
+   font-family: 'Roboto';
+  } 
+
+ 
+.main-page-inf
+{
+margin-top: 20%;
+margin-bottom: 13%;
+font-style: normal;
+font-weight: 500;
+font-size: 42px;
+line-height: 56px;
+color: #502EDD;
+margin-left: auto;
+margin-right: auto;
+width: fit-content;
+}
+
+h5
+{
+  font-style: normal;
+font-weight: 500;
+font-size: 42px;
+line-height: 56px;
+color: #502EDD;
+margin-left: auto;
+margin-right: auto;
+width: fit-content;
+margin-bottom: 3%;
+margin-top: 15%;
+}
+
+.main-page-img 
+{
+ text-align: center;
+ margin-bottom: 2%;
+}
+
+.down_background_for_picture
+{
+margin-left: auto;
+margin-right: auto;
+width: 700px;
+height: 10%;
+background: white;
+}
+
+.main-page-block
+{
+margin-left: auto;
+margin-right: auto;
+width: 700px;
+height: 109px;
+background: #a998ed;
+box-shadow: 0 0 16px 16px white inset;
+}
+
+#top_heigh {
+   margin-top: 10%;
+}
+
+.main-page-block-inf
+{
+font-size: 20px;
+display: inline-block;
+vertical-align: middle;
+text-align: center;
+width: 100%;
+height: 100%;
+margin-top: 2.0em;
+}
+
+.main-page-block-inf-image img
+{
+width: 10%;
+height: 10%;
+margin-left: auto;
+margin-right: auto;
+display: block;
+
+}
+
+.main-page-block-text
+{
+width: 115px;
+margin: auto;
+}
+
+.main-page-block-analize-text
+{
+width: 100px;
+margin: auto;
+}
+
+.main-page-block-question-text
+{
+width: 140px;
+margin: auto;
+margin-left: auto;
+margin-right: auto;
+display: block;
+}
