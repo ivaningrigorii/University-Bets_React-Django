@@ -9,9 +9,9 @@ urlpatterns = [
     path('api/v1/login/', include('djoser.urls.jwt')),
 
     path('api/v1/profile/', include('apps.user_profiles.urls')),
-    path('api/bets/', include('apps.bets.urls')),
-    path('api/games/', include('apps.games.urls')),
-    path('api/teams/', include('apps.teams.urls')),
+    path('api/bet/', include('apps.bets.urls')),
+    path('api/game/', include('apps.games.urls')),
+    path('api/team/', include('apps.teams.urls')),
 ]
 
 urlpatterns += doc_urls

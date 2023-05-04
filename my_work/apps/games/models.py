@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from apps.teams.models import Team
+from apps.teams.models import TeamModel
 
 
 class Game(models.Model):
@@ -24,7 +24,7 @@ class Game(models.Model):
 
 
 class Gamer(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
+    team = models.ForeignKey(TeamModel, on_delete=models.SET_NULL, null=True)
     game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
