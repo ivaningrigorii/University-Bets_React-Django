@@ -14,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'bio', 'img', 'base64_image']
+        fields = ['id', 'bio', 'img', 'money', 'base64_image', ]
 
     @receiver(pre_save, sender=Image)
     def pre_save_image(sender, instance, *args, **kwargs):

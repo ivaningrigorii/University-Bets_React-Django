@@ -9,6 +9,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True, verbose_name='описание', null=True)
     img = models.ImageField(upload_to="photos/profile/%Y/%m/%d/",
                             verbose_name='фото профиля', null=True, blank=True)
+    money = models.FloatField(default=2000, blank=True, verbose_name="состояние человека")
 
     def __str__(self):
         return f"{self.user}"
