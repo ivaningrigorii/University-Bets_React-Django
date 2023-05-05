@@ -70,3 +70,6 @@ class GamerDel(generics.DestroyAPIView):
     serializer_class = GamerSerializer
     permission_classes = (IsAuthenticated, )
 
+
+
+

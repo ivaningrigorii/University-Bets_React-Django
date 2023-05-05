@@ -13,6 +13,9 @@ db.sqllite3
 src_back/db.sqlite3
 /my_work/photos/
 migrations
+/my_work/celerybeat-schedule.bak
+/my_work/celerybeat-schedule.dat
+/my_work/celerybeat-schedule.dir
 #---------- front react -----------
 
 # dependencies
