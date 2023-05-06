@@ -35,6 +35,8 @@ def make_wins(game):
         for b in bets:
             up = Profile.objects.get(pk=b.user.pk)
             up.money = up + (rsum/b.money) * rsum if (b.gamer.win == True) else up - b.money
+            b.bet_init = True
+            b.save()
             up.save()
 
 
@@ -44,7 +46,10 @@ def initg():
         utc = pytz.UTC
         games = Game.objects.filter(gameinit=False)
         for g in games:
-            if g.date_game.replace(tzinfo=utc) < dt.datetime.now():
+            dt_now = dt.datetime.now().replace(tzinfo=pytz.utc)
+            dt_game = g.date_game.replace(tzinfo=pytz.utc)
+
+            if dt_game < dt_now:
                 make_wins(g)
                 g.gameinit = True
                 g.save()
@@ -57,11 +62,12 @@ def initg():
 @shared_task()
 def null_wins():
     try:
-        nbets = Bet.objects.filter(gamer=None)
+        nbets = Bet.objects.filter(gamer=None, bet_init=False)
         for nb in nbets:
             up = Profile.objects.get(pk=nb.user.pk)
             up.money = up.money + nb.money
-            nb.delete()
+            nb.bet_init = True
+            nb.save()
             up.save()
         return True
     except Exception as e:
