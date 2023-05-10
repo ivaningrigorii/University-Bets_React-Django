@@ -78,7 +78,7 @@ class AuthServices {
 
 
     // refresh jwt
-    refreshToken(tokens) {
+    async refreshToken(tokens) {
         return axios.post('api/v1/login/jwt/refresh/', {
             refresh: tokens.refresh
         }, { headers: { 'Authorization': 'Bearer ' + tokens.access, }})

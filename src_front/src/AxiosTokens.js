@@ -16,41 +16,40 @@ function getPayload(jwt) {
 
 function clear_tokens_and_new_login() {
     aths.deleteToken();
-    return window.location.replace(login_url);
+    window.location.replace(login_url);
 }
 
 //получение access токена или перенаправление на авторизацию
-export default function _token() {
+export default async function _token() {
     let tokens = cookies.get('tokens');
     let time_update_tokens = cookies.get('tt');
 
     if (!tokens) {
-        return window.location.replace(login_url);
+        window.location.replace(login_url);
     }
-    
+
     if (Date.now() - time_update_tokens > time_life_access_token) {
         if (Date.now() - time_update_tokens > time_life_refresh_token) {
             clear_tokens_and_new_login();
         }
         try {
-            let result_tokens = aths.refreshToken(tokens);
-            result_tokens.then((result)=> {
-                tokens = {
-                    access: result.access,
-                    refresh: result.refresh
-                };
-                console.log(tokens);
-                aths.saveToken(tokens);
-            });
-            result_tokens.catch((reason)=>{
-                if (reason==400 || reason==401) {
-                    clear_tokens_and_new_login();
-                }
-            });
+            await aths.refreshToken(tokens)
+                .then(async (result) => {
+                    tokens = {
+                        access: result.access,
+                        refresh: result.refresh
+                    };
+                    aths.saveToken(tokens);
+                })
+                .catch((reason) => {
+                    if (reason == 400 || reason == 401) {
+                        clear_tokens_and_new_login();
+                    }
+                });
         } catch {
-            return window.location.replace(login_url);
+            window.location.replace(login_url);
         }
     }
-
-    return tokens.access;
+    
+    return await tokens.access;
 }

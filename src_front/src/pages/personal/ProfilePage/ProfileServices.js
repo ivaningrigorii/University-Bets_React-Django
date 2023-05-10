@@ -2,13 +2,13 @@ import axios from 'axios';
 import _token from '../../../AxiosTokens';
 
 class ProfileServices {
-    getProfileData() {
-        const token_ = _token();
-        const bearer_str = 'Bearer ' + token_;
+    async getProfileData() {
+        let token;
+        await _token().then(async (res)=>token = await res);
 
         return axios.get("api/v1/profile/me/", {
             headers: {
-                'Authorization': bearer_str,
+                'Authorization': 'Bearer ' + token,
             },
         })
             .then(function (response) {
@@ -20,13 +20,13 @@ class ProfileServices {
     }
 
     //username, first_name, last_name, email
-    updateUser(data) {
-        const token_ = _token();
-        const bearer_str = 'Bearer ' + token_;
+    async updateUser(data) {
+        let token;
+        await _token().then(async (res)=>token = await res);
 
         return axios.patch("api/v1/profile/me/", data, {
             headers: {
-                'Authorization': bearer_str,
+                'Authorization': 'Bearer ' + token,
             },
         })
             .then(function (response) {
@@ -37,13 +37,13 @@ class ProfileServices {
             });
     }
     //img, bio
-    updateProfile(data) {
-        const token_ = _token();
-        const bearer_str = 'Bearer ' + token_;
+    async updateProfile(data) {
+        let token;
+        await _token().then(async (res)=>token = await res);
 
         return axios.patch("api/v1/profile/more-me/", data, {
             headers: {
-                'Authorization': bearer_str,
+                'Authorization': 'Bearer ' + token,
             },
         })
             .then(function (response) {
