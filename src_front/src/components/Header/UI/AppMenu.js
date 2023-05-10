@@ -1,10 +1,8 @@
-import logoUrl from '../images/label.svg';
 import ButtonLoginSelecter from '../components/ButtonLoginComponents/ButtonLoginSelecter';
 import AuthServices from '../../../pages/personal/Auth/AuthServices';
 import routes from '../../../routes';
 import { AppBar, Box, Toolbar, Button, Hidden, MenuItem, } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import ButtonMenuPolls from '../components/Menu/Polls/ButtonMenuPolls';
 import { KeyboardArrowDown, } from '@mui/icons-material';
 import StyledMenu from '../components/Menu/MenuButton';
 
@@ -37,9 +35,6 @@ function AppMenu() {
   return (
     <AppBar sx={{ bgcolor: "white" }}>
       <Toolbar variant='dences'>
-        <Box sx={{ cursor: 'pointer' }}>
-          <img src={logoUrl} width={130} height={30} onClick={handleClickImg} />
-        </Box>
         <Box sx={{ flexGrow: 1, width: 40, height: 30 }}></Box>
         <Hidden mdDown>
           <Box sx={{ height: 50, justifyContent: 'space-between', flexWrap: 'wrap', flexGrow: 1, display: { xs: 'flex', md: 'flex' } }}>
@@ -48,7 +43,7 @@ function AppMenu() {
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href="#">Ставки</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
-              href="#">Команды</Button>
+              href={routes.teams.list}>Команды</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href={routes.profile}>Профиль</Button>
             {but_log}
@@ -81,7 +76,7 @@ function AppMenu() {
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href="#">Ставки</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
-              href="#">Команды</Button>
+              href={routes.teams.list}>Команды</Button>
 
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href={routes.profile}>Профиль</Button>

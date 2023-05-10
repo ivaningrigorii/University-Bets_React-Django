@@ -14,20 +14,9 @@ export default {
         registration: "reg/",
     }),
 
-    polls: include('/polls/', {
-        cats: {
-            default: "catalogs/",
-            own: "catalogs/:page/",
-        },
-
-        create: "create/",
-        constructor: "constructor/:poll/",
-        analytics: "analytics/:poll/",
-        
-
-        passing: {
-            to: ":slug/",
-        }
-    }),
+    teams: include('/teams/', {
+        list: "list/",
+        change: "change/:id_team/"
+    })
 
 }

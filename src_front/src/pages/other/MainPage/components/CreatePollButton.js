@@ -15,9 +15,9 @@ function CreatePollButton() {
 
   return (
     <div style={styles.center}>
-      <Button sx={{ my: 2, display: 'block', }}
-        color="secondary" variant="contained" href={routes.polls.create} >
-        Создать опрос
+      <Button sx={{ my: 2, display: 'block', mt: "10px", }}
+        color="secondary" variant="contained" href="#" >
+        Сделать ставку
       </Button>
     </div>
   );

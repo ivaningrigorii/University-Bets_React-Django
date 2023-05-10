@@ -4,13 +4,13 @@ import { styled, } from '@mui/styles';
 
 const useStyles = makeStyles({
     body_pages: {
-        background: 'linear-gradient(45deg, #8778eb 30%, #78a6eb 90%)',
+        background: 'linear-gradient(41deg, rgba(242,227,185,1) 15%, rgba(240,180,203,1) 69%)',
     },
 
     box_elements: {
         marginTop: '10%',
         width: 250,
-        backgroundColor: "#adadeb",
+        backgroundColor: " #f095a9 ",
         borderRadius: '25px',
         minHeight: '300px',
     },
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     box_elements2: {
         marginTop: '10%',
         width: 250,
-        backgroundColor: "#adadeb",
+        backgroundColor: " #f095a9 ",
         borderRadius: '25px',
         minHeight: '360px',
     },
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     },
 
     form_elements: {
-        backgroundColor: "#adadeb",
+        backgroundColor: " #f095a9 ",
         marginLeft: '5%',
         marginRight: '5%',
         marginTop: '10%',
