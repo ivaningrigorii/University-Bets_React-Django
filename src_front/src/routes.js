@@ -16,7 +16,11 @@ export default {
 
     teams: include('/teams/', {
         list: "list/",
-        change: "change/:id_team/"
-    })
+    }),
+
+    games: include('/games/', {
+        list_my_games: "list-my-games/",
+        list_all_games: "list-all-games/"
+    }),
 
 }

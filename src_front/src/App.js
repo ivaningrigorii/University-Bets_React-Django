@@ -8,9 +8,11 @@ import EnterPage from "./pages/personal/Auth/Authorization/AuthorizPage";
 import LogoutWithotPage from "./pages/personal/Auth/LogOut/LogoutWithotPage";
 import RegistrationPage from "./pages/personal/Auth/Registration/RegistrationPage";
 import ProfilePageEdit from "./pages/personal/ProfilePage/ProfilePageEdit";
-import routes from './routes.js'
 import TeamsCats from "./pages/teams/TeamsCats";
-import ChangeTeamData from "./pages/teams/ChangeTeamData";
+import ListAllGames from "./pages/games/ListMyGames";
+import ListMyGames from "./pages/games/ListMyGames";
+
+import routes from './routes.js';
 
 
 class App extends Component {
@@ -32,8 +34,11 @@ class App extends Component {
           <Route path={routes.auth.registration} element={<RegistrationPage />} />
 
           <Route path={routes.teams.list} element={<TeamsCats />} />
-          <Route path={routes.teams.change} element={<ChangeTeamData />} />
 
+          <Route path={routes.games.list_all_games} element={<ListAllGames />} />
+          <Route path={routes.games.list_my_games} element={<ListMyGames />} />
+          
+          
         </Routes>
       </BrowserRouter>
     );

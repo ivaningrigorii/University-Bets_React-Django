@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -36,5 +37,12 @@ class TeamCreate(generics.CreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, *args, **kwargs):
+        _mutable = request.data._mutable
+        request.data._mutable = True
+
         request.data["user"] = request.user.id
+
+        logging.warning(request.data)
+
+        request.data._mutable = _mutable
         return self.create(request, *args, **kwargs)
