@@ -26,7 +26,6 @@ const MainPageInf = () => {
         <CreatePollButton />
       </Container>
     </ThemeProvider>
-
   );
 }
 export default MainPageInf;

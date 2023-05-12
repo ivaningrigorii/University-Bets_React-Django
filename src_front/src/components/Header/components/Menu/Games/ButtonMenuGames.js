@@ -7,15 +7,15 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import StyledMenu from '../MenuButton';
 import routes from '../../../../../routes';
 
-export default function ButtonMenuPolls() {
+export default function ButtonMenuGames() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
-    const openCreatePoll = () => window.location.replace(routes.polls.create);
-    const openCatalogsPolls = () => window.location.replace(routes.polls.cats.default);
+    const openAllGames = () => window.location.replace(routes.games.list_all_games);
+    const openMyGames = () => window.location.replace(routes.games.list_my_games);
 
     return (
         <div>
@@ -27,18 +27,18 @@ export default function ButtonMenuPolls() {
                 sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
                 disableElevation
                 onClick={handleClick}>
-                Опросы
+                Игры
             </Button>
 
             <StyledMenu id="demo-customized-menu"
                 MenuListProps={{ 'aria-labelledby': 'demo-customized-button', }}
                 anchorEl={anchorEl} open={open} onClose={handleClose}>
 
-                <MenuItem onClick={openCreatePoll} disableRipple>
-                    <EditIcon /> Создать опрос
+                <MenuItem onClick={openAllGames} disableRipple>
+                    <EditIcon /> Поставить команду
                 </MenuItem>
-                <MenuItem onClick={openCatalogsPolls} disableRipple>
-                    <FileCopyIcon /> Каталоги опросов
+                <MenuItem onClick={openMyGames} disableRipple>
+                    <FileCopyIcon /> Ваши игры
                 </MenuItem>
 
             </StyledMenu>

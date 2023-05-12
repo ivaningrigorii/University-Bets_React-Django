@@ -5,6 +5,7 @@ import { AppBar, Box, Toolbar, Button, Hidden, MenuItem, } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { KeyboardArrowDown, } from '@mui/icons-material';
 import StyledMenu from '../components/Menu/MenuButton';
+import ButtonMenuGames from '../components/Menu/Games/ButtonMenuGames';
 
 const auths = new AuthServices();
 
@@ -42,6 +43,9 @@ function AppMenu() {
               href={routes.home}>Главная</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href="#">Ставки</Button>
+
+            <ButtonMenuGames />
+            
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href={routes.teams.list}>Команды</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
@@ -75,6 +79,9 @@ function AppMenu() {
 
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href="#">Ставки</Button>
+
+            <ButtonMenuGames />
+
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href={routes.teams.list}>Команды</Button>
 

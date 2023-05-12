@@ -8,14 +8,14 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '5vh',
-    marginBottom: '1%'
+    marginTop: "5vh",
   }
 };
 function CreatePollButton() {
 
   return (
     <div style={styles.center}>
-      <Button sx={{ my: 2, display: 'block', mt: "10px", }}
+      <Button sx={{ my: 2, display: 'block', }}
         color="secondary" variant="contained" href="#" >
         Сделать ставку
       </Button>
