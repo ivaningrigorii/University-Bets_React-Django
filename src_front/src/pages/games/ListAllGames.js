@@ -14,6 +14,7 @@ import {
     responsiveFontSizes,
     ThemeProvider,
 } from '@mui/material/styles';
+import GamerCells from "./GamersCells";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -33,7 +34,7 @@ const ListAllGames = () => {
         let token;
         await _token().then(async (res) => token = await res);
 
-        return axios.get("api/game/my/all/", {
+        return axios.get("api/game/all/", {
             headers: {
                 'Authorization': 'Bearer ' + token,
             },
@@ -122,14 +123,10 @@ const ListAllGames = () => {
                                                         {val}
                                                     </TableCell>
                                                 ))}
-                                                <TableCell
-                                                    component="th"
-                                                    scope="row"
-                                                    align="center"
-                                                    sx={{ fontSize: { xs: 11, sm: 12, md: 14 }, }}
-                                                >
-                                                    
-                                                </TableCell>
+
+                                                <GamerCells id_game={game.id}
+                                                    stat={game.team_statistic} />
+
                                             </TableRow>
                                         );
                                     })}

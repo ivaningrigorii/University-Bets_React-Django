@@ -58,6 +58,16 @@ class GamesMy(generics.ListAPIView):
         user = self.request.user
         return Game.objects.filter(user=user).filter(gameinit=False)
     
+
+class TeamsMIN(generics.ListAPIView):
+    """ Команды, минимальные данные """
+    serializer_class = TeamMinData
+    permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        user = self.request.user
+        return TeamModel.objects.filter(user=user)
+
+    
 class ShowGamers(generics.RetrieveAPIView):
     """ Просмотр данных обо всех игроках """
     permission_classes = (IsAuthenticated,)
@@ -74,6 +84,11 @@ class ShowGamers(generics.RetrieveAPIView):
             team = TeamModel.objects.get(pk=gamer['team'])
             team_s = TeamMinData(team, many=False)
             gamer["team"] = team_s.data
+
+            if team.user == self.request.user:
+                gamer["team"]["is_own"] = True
+            else:
+                gamer["team"]["is_own"] = False
 
         response = serializer.data
         response['gamers'] = gamers_data
@@ -99,6 +114,7 @@ class GamerDel(generics.DestroyAPIView):
     lookup_field = 'pk'
     serializer_class = GamerSerializer
     permission_classes = (IsAuthenticated, )
+    queryset = Gamer.objects.all()
 
 
 

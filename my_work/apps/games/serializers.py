@@ -20,11 +20,11 @@ class GameSerializer(serializers.ModelSerializer):
         )
 
     def get_team_statistic(self, obj):
-        try:
-            query = Gamer.objects.filter(game=obj.id)
-            return query.values('id', 'game').annotate(total=Count('game')).get(game=obj.id)["total"]
-        except:
-            return 0
+            if Gamer.objects.filter(game=obj.id).exists():
+                query = Gamer.objects.filter(game=obj.id)
+                return query.values('game').annotate(total=Count('game')).get(game=obj.id)["total"]
+            else:
+                return 0
 
 class GamerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,7 +35,7 @@ class GamerSerializer(serializers.ModelSerializer):
 class TeamMinData(serializers.ModelSerializer):
     class Meta:
         model = TeamModel
-        fields = ('id', 'name', )
+        fields = ('id', 'name', "user", )
 
 
 class GameMinData(serializers.ModelSerializer):
