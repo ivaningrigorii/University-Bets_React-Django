@@ -85,7 +85,6 @@ const TeamsCats = () => {
                                         <Card>
                                             <CardMedia
                                                 component="img"
-                                                alt="green iguana"
                                                 height="140"
                                                 sx={{ objectFit: "cover", }}
                                                 src={`data:image;base64,${team.img_base64}`}

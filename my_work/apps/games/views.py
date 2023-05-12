@@ -1,11 +1,15 @@
 from time import sleep
 
 from celery import shared_task
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
 from apps.games.models import Game, Gamer
-from apps.games.serializers import GameSerializer, GamerSerializer
+from apps.teams.models import TeamModel
+from apps.games.serializers import GameSerializer, GamerSerializer, TeamMinData, GameMinData
+import logging
 
 
 class GameCreate(generics.CreateAPIView):
@@ -38,6 +42,10 @@ class Games(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Game.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        return Game.objects.filter(gameinit=False)
+
 
 class GamesMy(generics.ListAPIView):
     """
@@ -48,7 +56,29 @@ class GamesMy(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Game.objects.filter(user=user)
+        return Game.objects.filter(user=user).filter(gameinit=False)
+    
+class ShowGamers(generics.RetrieveAPIView):
+    """ Просмотр данных обо всех игроках """
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        game = get_object_or_404(Game, pk=pk)
+        serializer = GameMinData(game)
+        gamers_s = GamerSerializer(Gamer.objects.filter(game=pk), many=True)
+
+        gamers_data = gamers_s.data
+        for gamer in gamers_data:
+            team = TeamModel.objects.get(pk=gamer['team'])
+            team_s = TeamMinData(team, many=False)
+            gamer["team"] = team_s.data
+
+        response = serializer.data
+        response['gamers'] = gamers_data
+        return Response(response)
+
 
 
 class GamerAdd(generics.CreateAPIView):

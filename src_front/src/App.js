@@ -9,7 +9,7 @@ import LogoutWithotPage from "./pages/personal/Auth/LogOut/LogoutWithotPage";
 import RegistrationPage from "./pages/personal/Auth/Registration/RegistrationPage";
 import ProfilePageEdit from "./pages/personal/ProfilePage/ProfilePageEdit";
 import TeamsCats from "./pages/teams/TeamsCats";
-import ListAllGames from "./pages/games/ListMyGames";
+import ListAllGames from "./pages/games/ListAllGames";
 import ListMyGames from "./pages/games/ListMyGames";
 
 import routes from './routes.js';

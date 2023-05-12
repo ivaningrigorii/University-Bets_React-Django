@@ -9,5 +9,6 @@ urlpatterns = [
     path('<int:pk>/', GameOperaions.as_view()),
     path('', GameCreate.as_view()),
     path('gamer/', GamerAdd.as_view()),
+    path('gamer/<int:pk>/', ShowGamers.as_view()),
     path('gamer/<int:pk>/', GamerDel.as_view()),
 ]
