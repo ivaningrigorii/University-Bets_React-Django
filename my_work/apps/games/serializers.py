@@ -12,36 +12,47 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        read_only_fields = ('team_statistic', )
+        read_only_fields = ("team_statistic",)
         fields = (
-            "id", "date_game", "description", 
-            "place", "sport", "gameinit", 
-            "user", "team_statistic",
+            "id",
+            "date_game",
+            "description",
+            "place",
+            "sport",
+            "gameinit",
+            "user",
+            "team_statistic",
         )
 
     def get_team_statistic(self, obj):
-            if Gamer.objects.filter(game=obj.id).exists():
-                query = Gamer.objects.filter(game=obj.id)
-                return query.values('game').annotate(total=Count('game')).get(game=obj.id)["total"]
-            else:
-                return 0
+        if Gamer.objects.filter(game=obj.id).exists():
+            query = Gamer.objects.filter(game=obj.id)
+            return (
+                query.values("game")
+                .annotate(total=Count("game"))
+                .get(game=obj.id)["total"]
+            )
+        else:
+            return 0
+
 
 class GamerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gamer
-        fields = '__all__'
+        fields = "__all__"
 
 
 class TeamMinData(serializers.ModelSerializer):
     class Meta:
         model = TeamModel
-        fields = ('id', 'name', "user", )
+        fields = (
+            "id",
+            "name",
+            "user",
+        )
 
 
 class GameMinData(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ('id', )
-
-
-    
+        fields = ("id",)

@@ -11,8 +11,9 @@ from apps.user_profiles.models import Profile
 
 class BetCreate(generics.CreateAPIView):
     """
-            Поставить ставку
+    Поставить ставку
     """
+
     serializer_class = BetSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -31,15 +32,16 @@ class BetCreate(generics.CreateAPIView):
 
 class BetOperaions(generics.RetrieveUpdateDestroyAPIView):
     """
-            Ставка и действия с ней
+    Ставка и действия с ней
     """
+
     serializer_class = BetSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'pk'
+    lookup_field = "pk"
     queryset = Bet.objects.all()
 
     def delete(self, request, *args, **kwargs):
-        pk = self.kwargs.get('pk')
+        pk = self.kwargs.get("pk")
         bet = Bet.objects.get(pk=pk)
 
         profile = Profile.objects.get(pk=bet.user.pk)
@@ -49,10 +51,11 @@ class BetOperaions(generics.RetrieveUpdateDestroyAPIView):
         return super(BetOperaions, self).delete(request, *args, **kwargs)
 
 
-class BetsMy (generics.ListAPIView):
+class BetsMy(generics.ListAPIView):
     """
-                Все ваши ставки
+    Все ваши ставки
     """
+
     serializer_class = BetSerializer
     permission_classes = (IsAuthenticated,)
 

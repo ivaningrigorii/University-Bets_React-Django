@@ -8,14 +8,20 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.games.models import Game, Gamer
 from apps.teams.models import TeamModel
-from apps.games.serializers import GameSerializer, GamerSerializer, TeamMinData, GameMinData
+from apps.games.serializers import (
+    GameSerializer,
+    GamerSerializer,
+    TeamMinData,
+    GameMinData,
+)
 import logging
 
 
 class GameCreate(generics.CreateAPIView):
     """
-            Создание игры
+    Создание игры
     """
+
     serializer_class = GameSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -26,18 +32,20 @@ class GameCreate(generics.CreateAPIView):
 
 class GameOperaions(generics.RetrieveUpdateDestroyAPIView):
     """
-            Игра и действия с ней
+    Игра и действия с ней
     """
+
     serializer_class = GameSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'pk'
+    lookup_field = "pk"
     queryset = Game.objects.all()
 
 
 class Games(generics.ListAPIView):
     """
-                Все игры
+    Все игры
     """
+
     serializer_class = GameSerializer
     permission_classes = (IsAuthenticated,)
     queryset = Game.objects.all()
@@ -48,40 +56,42 @@ class Games(generics.ListAPIView):
 
 
 class GamesMy(generics.ListAPIView):
-    """
-        Все игры создателя
-    """
+    """Все игры создателя"""
+
     serializer_class = GameSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user = self.request.user
         return Game.objects.filter(user=user).filter(gameinit=False)
-    
+
 
 class TeamsMIN(generics.ListAPIView):
-    """ Команды, минимальные данные """
+    """Команды, минимальные данные"""
+
     serializer_class = TeamMinData
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
+
     def get_queryset(self):
         user = self.request.user
         return TeamModel.objects.filter(user=user)
 
-    
+
 class ShowGamers(generics.RetrieveAPIView):
-    """ Просмотр данных обо всех игроках """
+    """Просмотр данных обо всех игроках"""
+
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'pk'
+    lookup_field = "pk"
 
     def get(self, request, *args, **kwargs):
-        pk = kwargs.get('pk')
+        pk = kwargs.get("pk")
         game = get_object_or_404(Game, pk=pk)
         serializer = GameMinData(game)
         gamers_s = GamerSerializer(Gamer.objects.filter(game=pk), many=True)
 
         gamers_data = gamers_s.data
         for gamer in gamers_data:
-            team = TeamModel.objects.get(pk=gamer['team'])
+            team = TeamModel.objects.get(pk=gamer["team"])
             team_s = TeamMinData(team, many=False)
             gamer["team"] = team_s.data
 
@@ -91,17 +101,17 @@ class ShowGamers(generics.RetrieveAPIView):
                 gamer["team"]["is_own"] = False
 
         response = serializer.data
-        response['gamers'] = gamers_data
+        response["gamers"] = gamers_data
         return Response(response)
-
 
 
 class GamerAdd(generics.CreateAPIView):
     """
-        Добавления команды как участника в игре
+    Добавления команды как участника в игре
     """
+
     serializer_class = GamerSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -109,13 +119,10 @@ class GamerAdd(generics.CreateAPIView):
 
 class GamerDel(generics.DestroyAPIView):
     """
-        Удаление команды из участников в игре
+    Удаление команды из участников в игре
     """
-    lookup_field = 'pk'
+
+    lookup_field = "pk"
     serializer_class = GamerSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     queryset = Gamer.objects.all()
-
-
-
-

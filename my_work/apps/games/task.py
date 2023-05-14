@@ -14,7 +14,7 @@ from apps.user_profiles.models import Profile
 def bets_sum(bets):
     result = 0
     for b in bets:
-        result+=bets.money
+        result += bets.money
     return result
 
 
@@ -34,7 +34,9 @@ def make_wins(game):
 
         for b in bets:
             up = Profile.objects.get(pk=b.user.pk)
-            up.money = up + (rsum/b.money) * rsum if (b.gamer.win == True) else up - b.money
+            up.money = (
+                up + (rsum / b.money) * rsum if (b.gamer.win == True) else up - b.money
+            )
             b.bet_init = True
             b.save()
             up.save()
@@ -73,4 +75,3 @@ def null_wins():
     except Exception as e:
         print(e)
         return False
-

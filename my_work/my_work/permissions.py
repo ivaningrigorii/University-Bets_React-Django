@@ -1,13 +1,4 @@
-import logging
-from django.contrib.auth import get_user_model
-from rest_framework import permissions, exceptions
-from rest_framework.generics import get_object_or_404
-
-from apps.analitics.simple_analytics.models import SimpleAnalytics
-from apps.survey_manage.answer_blocks.models import IAnswer
-from apps.survey_manage.question_blocks.models import IQuestion
-from apps.survey_manage.survey_base.models import ISurvey
-from apps.survey_passing.models import TakingSurvey, IResultAnswer
+from rest_framework import permissions
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):

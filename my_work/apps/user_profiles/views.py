@@ -9,6 +9,7 @@ class ProfileOwner(generics.RetrieveUpdateAPIView):
     """
     Работа с user моделью авторизованного пользователя.
     """
+
     serializer_class = UserProfileOwnSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -24,4 +25,3 @@ class RealProfileOwner(generics.UpdateAPIView):
     def get_object(self):
         profile = get_object_or_404(Profile, pk=self.request.user.pk)
         return profile
-

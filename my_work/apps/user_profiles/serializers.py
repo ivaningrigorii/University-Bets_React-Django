@@ -14,7 +14,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'bio', 'img', 'money', 'base64_image', ]
+        fields = [
+            "id",
+            "bio",
+            "img",
+            "money",
+            "base64_image",
+        ]
 
     @receiver(pre_save, sender=Image)
     def pre_save_image(sender, instance, *args, **kwargs):
@@ -27,6 +33,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                 new_img = None
             if new_img != old_img:
                 import os
+
                 if os.path.exists(old_img):
                     os.remove(old_img)
         except:
@@ -34,7 +41,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def get_base64_image(self, obj):
         if obj.img:
-            f = open(obj.img.path, 'rb')
+            f = open(obj.img.path, "rb")
             image = File(f)
             res = base64.b64encode(image.read())
             f.close()
@@ -46,5 +53,4 @@ class UserProfileOwnSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'first_name', 'last_name', 'email', 'profile']
-
+        fields = ["username", "first_name", "last_name", "email", "profile"]
