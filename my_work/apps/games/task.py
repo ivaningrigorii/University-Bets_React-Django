@@ -11,12 +11,14 @@ from apps.games.models import Game, Gamer
 from apps.user_profiles.models import Profile
 from apps.teams.models import TeamModel
 from apps.user_profiles.models import HistoryGameInit
+from datetime import datetime, timedelta
+from django.contrib.auth import get_user_model
 
 
 def bets_sum(bets):
     result = 0
     for b in bets:
-        result += bets.money
+        result += b.money
     return result
 
 
@@ -77,7 +79,8 @@ def make_wins(game):
                 win_money = (rsum / b.money) * rsum
             else: 
                 win_money = (-1) * b.money
-            up.money = up + win_money
+            print(win_money)
+            up.money = up.money + win_money
             
             b.bet_init = True
             b.save()
@@ -85,9 +88,9 @@ def make_wins(game):
 
 
             hist = HistoryGameInit()
-            hist.user = b.user.pk
+            hist.user = get_user_model().objects.get(pk = b.user.pk) 
             hist.date_game = game.date_game
-            hist.team_name = TeamModel.objects.get(pk = b.gamer.team).name
+            hist.team_name = b.gamer.team.name
             hist.bet_money = b.money
             hist.win_money = win_money
             if b.gamer.win == True:
@@ -104,9 +107,11 @@ def initg():
         games = Game.objects.filter(gameinit=False)
         for g in games:
             dt_now = dt.datetime.now().replace(tzinfo=pytz.utc)
-            dt_game = g.date_game.replace(tzinfo=pytz.utc)
-
+            dt_game = g.date_game.replace(tzinfo=pytz.utc) + timedelta(minutes=180)
+            print(dt_now)
+            print(dt_game)
             if dt_game < dt_now:
+                print('Начало инициализации игры')
                 make_wins(g)
                 g.gameinit = True
                 g.save()
