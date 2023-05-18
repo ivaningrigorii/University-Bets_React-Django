@@ -1,14 +1,14 @@
 import {
-    Box,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Container,
-    Grid,
-    Stack,
-    Typography,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Stack,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { reverse } from "named-urls";
@@ -24,6 +24,25 @@ const TeamsCats = () => {
   const [teams, setTeams] = useState();
   const [create_team, setCreateTeam] = useState(false);
   const [change_team, setChange] = useState(false);
+  const [money, setMoney] = useState();
+
+  const getMoney = async () => {
+    let token;
+    await _token().then(async (res) => (token = await res));
+
+    return axios
+      .get("api/v1/profile/money/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        setMoney(response.data.money);
+      })
+      .catch(function (error) {
+        return error;
+      });
+  };
 
   const get_teams = async () => {
     let token;
@@ -45,11 +64,13 @@ const TeamsCats = () => {
 
   useEffect(() => {
     get_teams();
+    getMoney();
   }, []);
 
   useEffect(() => {
     if (create_team == true || change_team == true) {
       get_teams();
+      getMoney();
       setCreateTeam(false);
       setChange(false);
     }
@@ -67,6 +88,7 @@ const TeamsCats = () => {
       })
       .then(function (response) {
         setTeams(teams.filter((team) => team.id != id));
+        getMoney();
       })
       .catch(function (error) {
         console.log(error);
@@ -82,6 +104,8 @@ const TeamsCats = () => {
       <Header />
       <Container sx={{ minHeight: "105vh" }}>
         <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
+          <Typography>Ваши денюжки: {money && money}</Typography>
+          <Box marginTop="10px"/>
           {teams && (
             <Grid
               container
@@ -108,7 +132,11 @@ const TeamsCats = () => {
                           {team.name}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          {team.description}
+                          <p>{team.description}</p>
+                          <p>
+                            С: {team.o_power}, В: {team.o_endurance}, СД:{" "}
+                            {team.o_fortitude}
+                          </p>
                         </Typography>
                       </CardContent>
                       <CardActions>
@@ -123,9 +151,11 @@ const TeamsCats = () => {
               })}
             </Grid>
           )}
-          <Stack direction="row" justifyContent="flex-end" marginTop="5px">
-            <CreateTeamData setCreateTeam={setCreateTeam} />
-          </Stack>
+          {money && money >= 200 && (
+            <Stack direction="row" justifyContent="flex-end" marginTop="5px">
+              <CreateTeamData setCreateTeam={setCreateTeam} />
+            </Stack>
+          )}
         </Box>
       </Container>
       <Footer />

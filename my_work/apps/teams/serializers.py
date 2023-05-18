@@ -17,6 +17,9 @@ class TeamSerializer(serializers.ModelSerializer):
             "img",
             "img_base64",
             "user",
+            "o_power",
+            "o_endurance",
+            "o_fortitude"
         )
 
     def get_img_base64(self, obj):

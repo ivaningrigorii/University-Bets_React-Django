@@ -24,22 +24,16 @@ class Game(models.Model):
         return self.date_game
 
     def save(self, *args, **kwargs):
-        try:
-            super(Game, self).save(*args, **kwargs)
+        super(Game, self).save(*args, **kwargs)
 
-            team = None
-            try:
-                team = TeamModel.objects.get(name="ничья")
-            except TeamModel.DoesNotExist:
-                pass
-
-            if team is None:
-                team = TeamModel(name="ничья")
-                team.save()
-
+        
+        if (TeamModel.objects.filter(name="ничья").exists()):
+            team = TeamModel.objects.get(name="ничья")
             Gamer.objects.create(team=team, game=self)
-        except Exception as exp:
-            logging.warning(exp)
+        else:
+            team = TeamModel(name="ничья", description="")
+            team.save()
+            Gamer.objects.create(team=team, game=self)
 
     class Meta:
         verbose_name = "Игра"
@@ -57,3 +51,4 @@ class Gamer(models.Model):
     class Meta:
         verbose_name = "Участие"
         verbose_name_plural = "Участники"
+

@@ -2,6 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+
+
+class HistoryGameInit(models.Model):
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    date_game = models.DateTimeField(verbose_name="Дата проведения игры")
+    team_name = models.CharField(max_length=300)
+    bet_money = models.FloatField()
+    win_money = models.FloatField()
+    result = models.BooleanField()
 
 
 class Profile(models.Model):
