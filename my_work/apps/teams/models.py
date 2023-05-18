@@ -15,8 +15,13 @@ class TeamModel(models.Model):
         upload_to="photos/team/%Y/%m/%d/", verbose_name="Фотка", blank=True
     )
     user = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, verbose_name="Пользователь"
+        get_user_model(), on_delete=models.CASCADE, verbose_name="Пользователь",
+        blank=True, null=True,
     )
+
+    def save(self, *args, **kwargs):
+        if (self.name != 'ничья'):
+            super(TeamModel, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

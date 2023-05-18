@@ -42,7 +42,7 @@ function AppMenu() {
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
               href={routes.home}>Главная</Button>
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
-              href="#">Ставки</Button>
+              href={routes.bets.list_bets}>Ставки</Button>
 
             <ButtonMenuGames />
             
@@ -78,7 +78,7 @@ function AppMenu() {
               href={routes.home}>Главная</Button>
 
             <Button sx={{ color: 'black', display: 'block', height: 30, my: 1, }}
-              href="#">Ставки</Button>
+              href={routes.bets.list_bets}>Ставки</Button>
 
             <ButtonMenuGames />
 

@@ -22,4 +22,8 @@ export default {
     list_my_games: "list-my-games/",
     list_all_games: "list-all-games/",
   }),
+
+  bets: include("/bets/", {
+    list_bets: "",
+  }),
 };

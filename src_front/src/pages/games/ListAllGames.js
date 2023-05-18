@@ -1,27 +1,25 @@
 import {
-    Box,
-    Container,
-    Paper,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography
+  Box,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
 } from "@mui/material";
 import {
-    ThemeProvider,
-    createTheme,
-    responsiveFontSizes,
+  ThemeProvider,
+  createTheme,
+  responsiveFontSizes,
 } from "@mui/material/styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import _token from "../../AxiosTokens";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import CreateGameData from "./CreateGameData";
 import GamerCells from "./GamersCells";
 
 let theme = createTheme();
@@ -95,7 +93,9 @@ const ListAllGames = () => {
         <Container sx={{ minHeight: "105vh" }}>
           <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
             <Typography align="center">
-              Созданные вами актуальные игры
+              <b>
+                Список игр, ожидающих игру
+              </b>
             </Typography>
             <TableContainer component={Paper} marginTop="5px">
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -150,9 +150,6 @@ const ListAllGames = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Stack direction="row" justifyContent="flex-end" marginTop="5px">
-              <CreateGameData setCreateTeam={setCreateGame} />
-            </Stack>
           </Box>
         </Container>
       </ThemeProvider>

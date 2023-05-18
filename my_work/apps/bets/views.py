@@ -1,4 +1,5 @@
 import logging
+from django.shortcuts import get_object_or_404
 
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +8,9 @@ from rest_framework.response import Response
 from apps.bets.models import Bet
 from apps.bets.serializers import BetSerializer
 from apps.user_profiles.models import Profile
+from apps.games.models import Game
+from apps.games.serializers import GameSerializer
+from apps.games.models import Gamer
 
 
 class BetCreate(generics.CreateAPIView):
@@ -62,3 +66,27 @@ class BetsMy(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Bet.objects.filter(user=user)
+
+
+class BetsMyInGame(generics.RetrieveAPIView):
+    """Ваша ставка на игру"""
+
+    permission_classes = (IsAuthenticated,)
+    serializer_class = BetSerializer
+    lookup_field = "pk"
+
+    def get(self, request, *args, **kwargs):
+        result = {"bets": []}
+
+        user = self.request.user
+        game = get_object_or_404(Game, pk=kwargs.get("pk"))
+        gamers = Gamer.objects.filter(game=game)
+        bets = list(Bet.objects.filter(user=user, gamer__in=gamers))
+
+        s_bets = BetSerializer(bets, many=True)
+
+        result["bets"] = s_bets.data
+            
+        return Response(result)
+    
+

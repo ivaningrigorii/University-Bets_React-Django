@@ -11,6 +11,7 @@ import RegistrationPage from "./pages/personal/Auth/Registration/RegistrationPag
 import ProfilePage from "./pages/personal/ProfilePage/ProfilePage";
 import ProfilePageEdit from "./pages/personal/ProfilePage/ProfilePageEdit";
 import TeamsCats from "./pages/teams/TeamsCats";
+import ListBetsAllow from "./pages/bets/ListBetsAllow";
 
 import routes from "./routes.js";
 
@@ -44,6 +45,8 @@ class App extends Component {
             element={<ListAllGames />}
           />
           <Route path={routes.games.list_my_games} element={<ListMyGames />} />
+
+          <Route path={routes.bets.list_bets} element={<ListBetsAllow />} />
         </Routes>
       </BrowserRouter>
     );

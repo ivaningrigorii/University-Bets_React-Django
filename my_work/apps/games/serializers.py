@@ -5,6 +5,7 @@ from rest_framework import serializers
 from apps.games.models import Game, Gamer
 from apps.teams.models import TeamModel
 from django.db.models import Count
+from django.db.models import Q
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -25,8 +26,16 @@ class GameSerializer(serializers.ModelSerializer):
         )
 
     def get_team_statistic(self, obj):
-        if Gamer.objects.filter(game=obj.id).exists():
-            query = Gamer.objects.filter(game=obj.id)
+        if (
+            TeamModel.objects.get(name="ничья") is not None
+            and Gamer.objects.filter(
+                ~Q(team=TeamModel.objects.get(name="ничья")), game=obj.id
+            ).exists()
+        ):
+            query = Gamer.objects.filter(
+                ~Q(team=TeamModel.objects.get(name="ничья")), game=obj.id
+            )
+
             return (
                 query.values("game")
                 .annotate(total=Count("game"))

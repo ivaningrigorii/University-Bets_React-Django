@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 from apps.games.models import Game, Gamer
 from apps.teams.models import TeamModel
@@ -82,12 +83,17 @@ class ShowGamers(generics.RetrieveAPIView):
 
     permission_classes = (IsAuthenticated,)
     lookup_field = "pk"
+    queryset = Game.objects.all()
+    serializer_class = GamerSerializer
 
     def get(self, request, *args, **kwargs):
         pk = kwargs.get("pk")
         game = get_object_or_404(Game, pk=pk)
         serializer = GameMinData(game)
-        gamers_s = GamerSerializer(Gamer.objects.filter(game=pk), many=True)
+        gamers = Gamer.objects.filter(
+                ~Q(team=TeamModel.objects.get(name="ничья")), game=pk
+        )
+        gamers_s = GamerSerializer(gamers, many=True)
 
         gamers_data = gamers_s.data
         for gamer in gamers_data:
