@@ -54,3 +54,9 @@ class UserProfileOwnSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ["username", "first_name", "last_name", "email", "profile"]
+
+
+class MoneySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["id", "money"]

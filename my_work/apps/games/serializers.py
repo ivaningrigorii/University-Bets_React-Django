@@ -65,3 +65,9 @@ class GameMinData(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ("id",)
+
+
+class GameDefaultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = "__all__"

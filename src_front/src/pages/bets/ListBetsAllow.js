@@ -9,6 +9,9 @@ import {
   TableHead,
   TableRow,
   Typography,
+  FormControl,
+  InputLabel,
+  NativeSelect,
 } from "@mui/material";
 import {
   ThemeProvider,
@@ -20,6 +23,7 @@ import { useEffect, useState } from "react";
 import _token from "../../AxiosTokens";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import MakeBet from "./MakeBet";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
@@ -29,22 +33,18 @@ const titles = [
   "Место проведения",
   "Вид спорта",
   "Дата проведения",
-  "Участники",
-  "Коэффициенты",
-  "Ставка",
 ];
 
 const ListBetsAllow = () => {
   const [games, setGames] = useState();
-  const [create_game, setCreateGame] = useState(false);
-  const [change_game, setChange] = useState(false);
+  const [select_value, setSelectValue] = useState(1);
 
   const get_games = async () => {
     let token;
     await _token().then(async (res) => (token = await res));
 
     return axios
-      .get("api/game/all/", {
+      .get("api/game/games/for-bets/", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -61,40 +61,14 @@ const ListBetsAllow = () => {
     get_games();
   }, []);
 
-  useEffect(() => {
-    if (create_game == true || change_game == true) {
-      get_games();
-      setCreateGame(false);
-      setChange(false);
-    }
-  }, [create_game, change_game]);
-
-  const handleDel = async (id) => {
-    let token;
-    await _token().then(async (res) => (token = await res));
-
-    return axios
-      .delete("api/game/" + id + "/", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then(function (response) {
-        setGames(games.filter((game) => game.id != id));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   return (
     <Box>
       <Header />
       <ThemeProvider theme={theme}>
         <Container sx={{ minHeight: "105vh" }}>
-          <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
+          <Box marginTop={{ xs: 5, sm: 5, md: 10 }}>
             <Typography align="center">
-              <b>Список игр, ожидающих игру</b>
+              <b>Выбор игры</b>
             </Typography>
             <TableContainer component={Paper} marginTop="5px">
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -113,37 +87,75 @@ const ListBetsAllow = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {games &&
-                    games.map((game) => {
-                      let row_values = [
-                        game.description,
-                        game.place,
-                        game.sport,
-                        new Date(game.date_game).toLocaleString(),
-                      ];
-                      return (
-                        <TableRow
-                          key={game.name}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          {row_values.map((val) => (
-                            <TableCell
-                              component="th"
-                              scope="row"
-                              align="center"
-                              sx={{ fontSize: { xs: 11, sm: 12, md: 14 } }}
-                            >
-                              {val}
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      );
-                    })}
+                  {games && games.length > 0 && (
+                    <TableRow
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell>
+                        <FormControl fullWidth>
+                          <InputLabel
+                            variant="standard"
+                            htmlFor="uncontrolled-native"
+                          >
+                            Выбор игры
+                          </InputLabel>
+                          <NativeSelect
+                            defaultValue={select_value}
+                            inputProps={{
+                              name: "age",
+                              id: "uncontrolled-native",
+                            }}
+                            onChange={(event) =>
+                              setSelectValue(event.target.value)
+                            }
+                          >
+                            {games &&
+                              games.map((game, index) => (
+                                <option value={index + 1}>
+                                  {game.description}
+                                </option>
+                              ))}
+                          </NativeSelect>
+                        </FormControl>
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                        sx={{ fontSize: { xs: 11, sm: 12, md: 14 } }}
+                      >
+                        {games[select_value - 1].place}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                        sx={{ fontSize: { xs: 11, sm: 12, md: 14 } }}
+                      >
+                        {games[select_value - 1].sport}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                        sx={{ fontSize: { xs: 11, sm: 12, md: 14 } }}
+                      >
+                        {new Date(
+                          games[select_value - 1].date_game
+                        ).toLocaleString()}
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
+            <Box marginTop="15px">
+              {(games && games.length > 0) && (
+                <MakeBet id_game={games[select_value - 1].id} />
+              )}
+            </Box>
           </Box>
         </Container>
       </ThemeProvider>

@@ -4,4 +4,5 @@ from .views import *
 urlpatterns = [
     path("me/", ProfileOwner.as_view()),
     path("more-me/", RealProfileOwner.as_view()),
+    path("money/", Money.as_view()),
 ]

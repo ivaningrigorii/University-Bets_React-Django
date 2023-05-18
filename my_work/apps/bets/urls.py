@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:pk>/", BetOperaions.as_view()),
     path("", BetCreate.as_view()),
     path("in-game/<int:pk>/", BetsMyInGame.as_view()),
+    path("ratios/<int:pk>/", BetK.as_view()),
 ]

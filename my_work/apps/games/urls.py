@@ -12,4 +12,6 @@ urlpatterns = [
     path('gamer/<int:pk>/', ShowGamers.as_view()),
     path('gamer/other/<int:pk>/', GamerDel.as_view()),
     path('teams/min-data/', TeamsMIN.as_view()),
+    path('games/for-bets/', GamesBets.as_view()),
+    path('gamers/for-bets/<int:pk>/', ShowGamersForBets.as_view()),
 ]

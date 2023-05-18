@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
+import routes from '../../../../routes';
 
 const styles = {
   center: {
@@ -17,7 +18,7 @@ function CreatePollButton() {
         sx={{ my: 2, display: "block" }}
         color="secondary"
         variant="contained"
-        href="#"
+        href={routes.bets.list_bets}
       >
         Сделать ставку
       </Button>
