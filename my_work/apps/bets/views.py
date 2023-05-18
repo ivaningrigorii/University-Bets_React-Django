@@ -30,10 +30,10 @@ class BetCreate(generics.CreateAPIView):
         profile = Profile.objects.get(pk=request.user.id)
         money = request.data["money"]
 
-        if money <= 0 or money > profile.money:
+        if float(money) <= 0 or float(money) > profile.money:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        profile.money = profile.money - money
+        profile.money = profile.money - float(money)
         profile.save()
         return self.create(request, *args, **kwargs)
 
@@ -47,6 +47,24 @@ class BetOperaions(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     lookup_field = "pk"
     queryset = Bet.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        request.data["user"] = request.user.id
+
+        bet = Bet.objects.get(pk=kwargs.get("pk"))
+
+        profile = Profile.objects.get(pk=request.user.id)
+        logging.warning(request.data)
+        logging.warning(request)
+        money = request.data["money"]
+
+        profile.money = profile.money + float(bet.money) - float(money)
+
+        profile.save()
+        bet.money = float(money)
+        bet.gamer = Gamer.objects.get(pk = request.data["gamer"])
+        bet.save()
+        return Response({})
 
 
     def delete(self, request, *args, **kwargs):

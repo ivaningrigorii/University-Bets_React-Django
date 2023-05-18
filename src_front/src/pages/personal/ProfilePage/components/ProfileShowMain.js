@@ -63,6 +63,7 @@ const ProfileShow = () => {
             direction="column"
             spacing={2}
           >
+            <p>Деееееньги: {data_user && data_user.profile.money}</p>
             <p>Имя: {data_user && data_user.first_name}</p>
             <p>Фамилия: {data_user && data_user.last_name}</p>
             <p>Дополнительно: {data_user && data_user.profile.bio}</p>

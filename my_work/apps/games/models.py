@@ -47,7 +47,7 @@ class Game(models.Model):
 
 
 class Gamer(models.Model):
-    team = models.ForeignKey(TeamModel, on_delete=models.SET_NULL, null=True)
+    team = models.ForeignKey(TeamModel, on_delete=models.CASCADE, null=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
     win = models.BooleanField(verbose_name="Наличие победы", null=True, blank=True)
 

@@ -21,6 +21,8 @@ const MakeBet = ({ id_game }) => {
   const [myBets, setMyBets] = useState();
   const [money, setMoney] = useState();
 
+  const [updateBets, setUpdateBets] = useState(false);
+
   const getGamers = async () => {
     let token;
     await _token().then(async (res) => (token = await res));
@@ -119,10 +121,23 @@ const MakeBet = ({ id_game }) => {
   }, []);
 
   useEffect(() => {
-    console.log(gamers);
-    console.log(ratios);
-    console.log(myBets);
-  }, [gamers, ratios, myBets]);
+    if (updateBets && updateBets == true) {
+      getRatios()
+        .then((res) => setRatios(res))
+        .catch((err) => console.log(err));
+      getBets()
+        .then((res) => setMyBets(res))
+        .catch((err) => console.log(err));
+      getMoney()
+        .then((res) => setMoney(res))
+        .catch((err) => console.log(err));
+      setUpdateBets(false);
+    }
+  }, [updateBets]);
+
+  var rounded = function (number) {
+    return +number.toFixed(2);
+  };
 
   return (
     <Box>
@@ -179,7 +194,7 @@ const MakeBet = ({ id_game }) => {
                         >
                           {find_ratio_for_gamer(gamer.id) >= 0
                             ? "X " +
-                              ratios[find_ratio_for_gamer(gamer.id)].ratio
+                            rounded(ratios[find_ratio_for_gamer(gamer.id)].ratio)
                             : "X ---"}
                         </TableCell>
                       );
@@ -219,8 +234,7 @@ const MakeBet = ({ id_game }) => {
               bet={myBets}
               gamers_={gamers}
               money_={money}
-              setMoney={setMoney}
-              setBet={setMyBets}
+              setUpdateBets={setUpdateBets}
             />
           )}
         </Box>

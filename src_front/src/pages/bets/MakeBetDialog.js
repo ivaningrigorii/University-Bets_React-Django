@@ -17,13 +17,91 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import _token from "../../AxiosTokens";
 
-const MakeBetDialog = ({ bet, gamers_, money_, setMoney_, setBet_ }) => {
+const MakeBetDialog = ({ bet, gamers_, money_, setUpdateBets,}) => {
   const [open, setOpen] = React.useState(false);
 
   const [gamers, setGamers] = useState(gamers_);
   const [selectGamer, setSelectGamer] = useState();
 
+  const [bet_this, setBet_this] = useState();
+  const [create_bet_this, setCreateBetThis] = useState();
+
   const [money, setMoney] = useState();
+
+  const deleteBet = async () => {
+    let token;
+    await _token().then(async (res) => (token = await res));
+
+    return axios
+      .delete("api/bet/"+bet.id+"/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then(function (response) {
+        setUpdateBets(true);
+        setOpen(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const changeBet = async () => {
+    let token;
+    await _token().then(async (res) => (token = await res));
+
+    return axios
+      .patch("api/bet/"+bet.id+"/", bet_this, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then(function (response) {
+        setUpdateBets(true);
+        setOpen(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    changeBet()
+    .then(async (res) => {
+        if (await res) {
+            setOpen(false);
+        }
+    })
+  }, [bet_this, ])
+
+  const createBet = async () => {
+    let token;
+    await _token().then(async (res) => (token = await res));
+
+    return axios
+      .post("api/bet/", create_bet_this, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then(function (response) {
+        setUpdateBets(true);
+        setOpen(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    createBet()
+    .then(async (res) => {
+        if (await res) {
+            setOpen(false);
+        }
+    })
+  }, [create_bet_this, ])
 
   const find_gamer_index_by_id = (id_gamer) => {
     let index_ = -1;
@@ -34,6 +112,15 @@ const MakeBetDialog = ({ bet, gamers_, money_, setMoney_, setBet_ }) => {
     });
     return index_;
   };
+
+  const get_max_value = () => {
+    if (bet.money) {
+        return money_ + bet.money;
+    }
+    else {
+        return money_;
+    }
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,6 +140,36 @@ const MakeBetDialog = ({ bet, gamers_, money_, setMoney_, setBet_ }) => {
     }
   }, []);
 
+  const makeBet = () => {
+    console.log(bet);
+    if ((!money || money < 0 || money > get_max_value()) || 
+        !selectGamer || selectGamer <= 0 ) {
+        alert("Такая ставка невозможна!");
+        return;
+    }
+
+    if (money == 0) {
+        deleteBet()
+        .then(async (res) => {
+            if (await res) {
+                setOpen(false);
+            }
+        })
+    } else {
+        if (bet.money) {
+            let bet__ = bet;
+            bet__.money = money;
+            bet__.gamer = gamers[selectGamer-1].id;
+            setBet_this(bet__);
+        } else {
+            setCreateBetThis({
+                money: money,
+                gamer: gamers[selectGamer-1].id
+            })
+        }
+    }
+  }
+
   return (
     <div>
       <Button
@@ -70,7 +187,7 @@ const MakeBetDialog = ({ bet, gamers_, money_, setMoney_, setBet_ }) => {
         <DialogTitle id="alert-dialog-title">{"Ставки"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Ставки, ставки, ставки
+            Максимальная сумма: {get_max_value()}
           </DialogContentText>
           <Stack direction="column" justifyContent="center">
             <FormControl fullWidth>
@@ -105,7 +222,7 @@ const MakeBetDialog = ({ bet, gamers_, money_, setMoney_, setBet_ }) => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button >Записать</Button>
+          <Button onClick={makeBet}>Записать</Button>
           <Button onClick={handleClose} autoFocus>
             Отмена
           </Button>

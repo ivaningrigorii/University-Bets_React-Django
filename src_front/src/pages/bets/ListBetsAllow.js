@@ -98,13 +98,12 @@ const ListBetsAllow = () => {
                           <InputLabel
                             variant="standard"
                             htmlFor="uncontrolled-native"
+                            size="small"
                           >
-                            Выбор игры
                           </InputLabel>
                           <NativeSelect
                             defaultValue={select_value}
                             inputProps={{
-                              name: "age",
                               id: "uncontrolled-native",
                             }}
                             onChange={(event) =>
