@@ -99,12 +99,17 @@ const TeamsCats = () => {
     window.location.replace(reverse(routes.teams.change, { id: id }));
   };
 
+  var rounded = function (number) {
+    return +number.toFixed(2);
+  };
+
   return (
-    <Box>
+    <Box sx={{background: "linear-gradient(41deg, rgba(141,224,244,1) 15%, rgba(245,155,164,1) 85%)"}}>
       <Header />
       <Container sx={{ minHeight: "105vh" }}>
+        <Stack/>
         <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
-          <Typography>Ваши денюжки: {money && money}</Typography>
+          <Typography>Ваши денюжки: {money && rounded(money)}</Typography>
           <Box marginTop="10px"/>
           {teams && (
             <Grid

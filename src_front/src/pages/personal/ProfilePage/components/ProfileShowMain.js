@@ -23,6 +23,10 @@ const ProfileShow = () => {
       });
   }, []);
 
+  var rounded = function (number) {
+    return +number.toFixed(2);
+  };
+
   return (
     <Container sx={{ mt: 10, minHeight: "120vh" }}>
       <Box>
@@ -63,7 +67,7 @@ const ProfileShow = () => {
             direction="column"
             spacing={2}
           >
-            <p>Деееееньги: {data_user && data_user.profile.money}</p>
+            <p>Деееееньги: {data_user && rounded(data_user.profile.money)}</p>
             <p>Имя: {data_user && data_user.first_name}</p>
             <p>Фамилия: {data_user && data_user.last_name}</p>
             <p>Дополнительно: {data_user && data_user.profile.bio}</p>

@@ -1,12 +1,18 @@
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from rest_framework import serializers
-from .models import Profile
+from .models import HistoryGameInit, Profile
 import base64
 from django.core.files import File
 from django.db.models.signals import pre_save
 from PIL import Image
 import logging
+
+
+class HistoryGameInitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoryGameInit
+        fields = '__all__'
 
 
 class ProfileSerializer(serializers.ModelSerializer):

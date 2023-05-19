@@ -8,7 +8,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+  Stack
 } from "@mui/material";
 import {
   ThemeProvider,
@@ -87,10 +88,11 @@ const ListAllGames = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{background: "linear-gradient(41deg, rgba(215,244,141,1) 15%, rgba(155,203,245,1) 85%)"}}>
       <Header />
       <ThemeProvider theme={theme}>
         <Container sx={{ minHeight: "105vh" }}>
+          <Stack/>
           <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
             <Typography align="center">
               <b>

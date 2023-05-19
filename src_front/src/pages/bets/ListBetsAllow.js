@@ -12,6 +12,7 @@ import {
   FormControl,
   InputLabel,
   NativeSelect,
+  Stack,
 } from "@mui/material";
 import {
   ThemeProvider,
@@ -34,6 +35,11 @@ const titles = [
   "Вид спорта",
   "Дата проведения",
 ];
+
+const body_pages = {
+  background:
+    "linear-gradient(41deg, rgba(242,227,185,1) 15%, rgba(240,180,203,1) 69%)",
+};
 
 const ListBetsAllow = () => {
   const [games, setGames] = useState();
@@ -62,10 +68,11 @@ const ListBetsAllow = () => {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{background: "linear-gradient(41deg, rgba(215,244,141,1) 15%, rgba(245,195,155,1) 85%)"}}>
       <Header />
       <ThemeProvider theme={theme}>
-        <Container sx={{ minHeight: "105vh" }}>
+        <Container sx={{ minHeight: "105vh"}}>
+          <Stack/>
           <Box marginTop={{ xs: 5, sm: 5, md: 10 }}>
             <Typography align="center">
               <b>Выбор игры</b>
@@ -99,8 +106,7 @@ const ListBetsAllow = () => {
                             variant="standard"
                             htmlFor="uncontrolled-native"
                             size="small"
-                          >
-                          </InputLabel>
+                          ></InputLabel>
                           <NativeSelect
                             defaultValue={select_value}
                             inputProps={{
@@ -151,7 +157,7 @@ const ListBetsAllow = () => {
               </Table>
             </TableContainer>
             <Box marginTop="15px">
-              {(games && games.length > 0) && (
+              {games && games.length > 0 && (
                 <MakeBet id_game={games[select_value - 1].id} />
               )}
             </Box>

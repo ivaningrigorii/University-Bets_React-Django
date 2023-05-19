@@ -17,6 +17,19 @@ class ProfileOwner(generics.RetrieveUpdateAPIView):
     def get_object(self):
         user = self.request.user
         return get_user_model().objects.get(id=user.pk)
+    
+
+class HistoryBets(generics.ListAPIView):
+    serializer_class = HistoryGameInitSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = HistoryGameInit.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        user_id = request.user.id 
+        hist = HistoryGameInit.objects.filter(user=user_id)
+        s = HistoryGameInitSerializer(hist, many=True)
+        
+        return Response(s.data)
 
 
 class RealProfileOwner(generics.UpdateAPIView):

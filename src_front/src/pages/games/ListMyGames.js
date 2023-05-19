@@ -90,10 +90,11 @@ const ListMyGames = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{background: "linear-gradient(41deg, rgba(244,240,141,1) 15%, rgba(245,155,164,1) 85%)"}}>
       <Header />
       <ThemeProvider theme={theme}>
         <Container sx={{ minHeight: "105vh" }}>
+          <Stack/>
           <Box marginTop={{ xs: 5, sm: 5, md: 15 }}>
             <Typography align="center">
               Созданные вами актуальные игры

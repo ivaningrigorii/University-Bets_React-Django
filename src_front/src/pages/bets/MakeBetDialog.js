@@ -170,6 +170,10 @@ const MakeBetDialog = ({ bet, gamers_, money_, setUpdateBets,}) => {
     }
   }
 
+  var rounded = function (number) {
+    return +number.toFixed(2);
+  };
+
   return (
     <div>
       <Button
@@ -187,7 +191,7 @@ const MakeBetDialog = ({ bet, gamers_, money_, setUpdateBets,}) => {
         <DialogTitle id="alert-dialog-title">{"Ставки"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Максимальная сумма: {get_max_value()}
+            Максимальная сумма: {rounded(get_max_value())}
           </DialogContentText>
           <Stack direction="column" justifyContent="center">
             <FormControl fullWidth>

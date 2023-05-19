@@ -144,7 +144,7 @@ const MakeBet = ({ id_game }) => {
       <Container sx={{ minHeight: "105vh" }}>
         <Box marginTop={{ xs: 5, sm: 5, md: 10 }}>
           <Typography align="center">
-            Делание ставки. Ваша сумма: <b>{money && money}</b>
+            Делание ставки. Ваша сумма: <b>{money && rounded(money)}</b>
           </Typography>
           <TableContainer component={Paper} marginTop="5px">
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

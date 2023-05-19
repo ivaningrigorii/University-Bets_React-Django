@@ -4,6 +4,7 @@ export default {
   home: "/",
 
   profile: "/profile/",
+  analitic: "/think/",
   profile_next: include("/profile/", {
     edit: "edit/",
   }),
